@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+    var realGrid2Lic = 'upVcPE+wPOmtLjqyBIh9RkM/nBOseBrflwxYpzGZyYm9cY8amGDkiMnVeQKUHJDjW2y71jtk+wteqHQ1mRMIXzEcGIrzZpzzNTakk0yR9UcO/hzNodVsIiqQNVtxmmYt';
+</script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var component = createComponet({
+    template: `
+        <div>
+            <h1>{{ greeting1 }}</h1>
+            <h2>{{ greeting2 }}</h2>
+            <input type="text">
+        </div>
+    `,
+    data: function () {
+        return {
+            greeting1: 1,
+            greeting2: new Date()
+        }
+    },
+    methods: {
+        onInput: function (e) {
+            var value = e.target.value;
+            this.greeting1 = e.target.value;
+        }
+    }
+});
+component.$mount('#app');
+console.dir(component.greeting2);
+
+
+function createComponet (options) {
+    var rtextvalue = /\{\{[\s]*([\S]+)[\s]*\}\}/g;
+    var vnodeMap = {};
+    var component = {};
+    var template = options.template;
+    var rootElem = document.createElement('div');
+    rootElem.innerHTML = template;
+
+    flattern(rootElem, vnodeMap);
+    Object.keys(vnodeMap).forEach(function (key) {
+        Object.defineProperty(component, key, {
+            get: function () {
+                return vnodeMap[key].value;
+            },
+            set: function (value) {
+                vnodeMap[key].node.nodeValue = value;
+                vnodeMap[key].value = value;
+            }
+        });
+    });
+
+    component.$mount = function (selector) {
+        var targetElem = document.querySelector(selector);
+        var elem = Array.prototype.filter.call(rootElem.childNodes, function (node) {
+            return node.nodeType === 1;
+        })[0];
+        init(elem);
+        targetElem.appendChild(elem);
+    };
+
+    return component;
+
+    function init (componentRoot) {
+        var data = options.data();
+        Object.keys(vnodeMap).forEach(function (key) {
+            component[key] = data[key];
+        });
+
+        var onInput = options.methods.onInput;
+        var inputText = componentRoot.querySelector('input');
+        // inputText.addEventListener('input', function (e) {
+        //     onInput.call(component, e);
+        // });
+
+        inputText.addEventListener('input', onInput.bind(component));
+    }
+
+    function flattern (elem, seed) {
+        var nodes = elem.childNodes;
+        var i = 0;
+        var length = nodes.length;
+        for (; i < length; i++) {
+            var node = nodes[i];
+            if (node.nodeType === 1) {
+                if (node.childNodes.length > 0) {
+                    flattern(node, seed);
+                }
+            } else if (node.nodeType === 3) {
+                var matches = rtextvalue.exec(node.nodeValue);
+                if (matches) {
+                    var matched = matches[1];
+                    seed[matched] = {
+                        expr: matches[0],
+                        name: matched,
+                        node: node,
+                        value: undefined
+                    }
+                }
+            }
+        }
+    }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+new Vue({
+    template:
+        '<div>' +
+            '<h1>{{ greeting }}</h1>' +
+            '<input type="text" @input="onInput">' +
+        '</div>',
+    data: function () {
+        return {
+            greeting: ''
+        };
+    },
+    methods: {
+        onInput: function (e) {
+            var value = e.target.value;
+            this.greeting = e.target.value;
+        }
+    }
+}).$mount('#app');
+</script>
+</body>
+</html>

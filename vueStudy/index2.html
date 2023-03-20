@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+new Vue({
+    data: function () {
+        return {
+            greeting: ''
+        };
+    },
+    methods: {
+        onInput: function (e) {
+            var value = e.target.value;
+            this.greeting = e.target.value;
+        }
+    },
+    render: function (h) {
+        var h1 = h('h1', null, [this.greeting]);
+        var inputText = h('input', {
+            class: {
+                'q-checkbox__inner--false': this.greeting == '0',
+                'q-checkbox__inner--true': this.greeting == '1'
+            },
+            attrs: {
+                type: 'text'
+            },
+            on: {
+                input: this.onInput
+            }
+        }, []);
+        return h('div', null, [h1, inputText]);
+    }
+}).$mount('#app');
+</script>
+</body>
+</html>

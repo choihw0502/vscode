@@ -1,0 +1,20 @@
+웹 문서를 객체화 한것을 DOM
+dom 트리의 최상의 노드는 document
+
+브라우저 객체를 BOM
+<iframe width="1536" height="864" src="https://www.youtube.com/embed/3c4xp8U3jjM" title="자바스크립트 BOM 이란? | 브라우저 객체 모델 | Browser Object Model  | 웹 개발 입문자들을 위한 강좌!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+브라우저를 제어하기 위한 인터페이스
+brower 객체
+    window
+    document
+    history
+    location
+    screen
+    navigator
+
+
+webpack
+개발을 할때는 모듈로 개발하고 서버에 배포할때는 번들링해 하나의 파일로 묶는다
+이런걸 모듈번들러라고한다 모듈 번들러 중 하나가 webpack 이다
+
+
