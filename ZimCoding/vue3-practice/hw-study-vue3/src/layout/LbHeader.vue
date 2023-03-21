@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <RouterLink class="navbar-brand" active-class="active" to="/">대메뉴</RouterLink>
         <button
           class="navbar-toggler"
           type="button"
@@ -16,10 +16,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <RouterLink class="nav-link" active-class="active" to="/"> Home </RouterLink>
+            <li class="nav-item" v-for="app in appList" :key="app.app_cd">
+              <RouterLink class="nav-link" active-class="active" :to="app.app_cd">
+                {{ app.app_cd }}
+                {{ app.app_nm }}
+              </RouterLink>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <RouterLink class="nav-link" active-class="active" to="/about"> About </RouterLink>
             </li>
             <li class="nav-item">
@@ -27,7 +30,7 @@
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" active-class="active" to="/nested"> Nested </RouterLink>
-            </li>
+            </li> -->
           </ul>
           <div class="d-flex" role="search">
             <button class="btn btn-outline-light" type="button" @click="goPage">글쓰기</button>
@@ -40,6 +43,8 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { getApps } from '@/api/application'
+const appList = getApps()
 
 const router = useRouter()
 const goPage = () => {

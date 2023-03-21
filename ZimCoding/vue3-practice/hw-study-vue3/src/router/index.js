@@ -26,11 +26,16 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
+    path: '/CMS',
     component: AboutView
   },
   {
-    path: '/posts',
+    path: '/AIF',
+    name: 'postList',
+    component: PostListView
+  },
+  {
+    path: '/test',
     name: 'postList',
     component: PostListView
   },

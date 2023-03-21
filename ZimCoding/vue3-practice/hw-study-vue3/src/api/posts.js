@@ -13,18 +13,3 @@ const posts = [
 export function getPosts() {
   return posts
 }
-
-const menuList = [
-  { menuCd: 1, menuNm: 'test1', upperMenu: 1, orderby: 1 },
-  { menuCd: 2, menuNm: 'test2', upperMenu: 1, orderby: 2 },
-  { menuCd: 3, menuNm: 'test3', upperMenu: 1, orderby: 2 },
-  { menuCd: 4, menuNm: 'test4', upperMenu: 1, orderby: 2 },
-  { menuCd: 5, menuNm: 'test5', upperMenu: 1, orderby: 2 },
-  { menuCd: 6, menuNm: 'test6', upperMenu: 1, orderby: 2 },
-  { menuCd: 7, menuNm: 'test7', upperMenu: 6, orderby: 3 },
-  { menuCd: 8, menuNm: 'test8', upperMenu: 6, orderby: 3 }
-]
-
-export function getMenus() {
-  return menuList
-}

@@ -1,10 +1,7 @@
-<script setup>
-import LbNavi from './LbNavi.vue'
-</script>
+<script setup></script>
 
 <template>
   <main>
-    <LbNavi></LbNavi>
     <div class="container py-4">
       <RouterView></RouterView>
     </div>
