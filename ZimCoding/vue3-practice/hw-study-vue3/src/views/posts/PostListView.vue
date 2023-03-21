@@ -12,7 +12,7 @@
         ></PostItem>
       </div>
     </div>
-    <AppCard> <PostDetailView id="1"></PostDetailView> </AppCard>
+    <AppCard> <PostDetailView :id="1"></PostDetailView> </AppCard>
   </div>
 </template>
 

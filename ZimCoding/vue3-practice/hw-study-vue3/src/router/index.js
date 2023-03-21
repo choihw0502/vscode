@@ -36,14 +36,19 @@ const routes = [
   },
   {
     path: '/test',
-    name: 'postList',
-    component: PostListView
+    name: 'test',
+    component: NestedView
   },
   {
     path: '/posts/:id',
     name: 'postDetail',
     component: postDetailView,
-    props: true
+    // props: true
+    props: function (route) {
+      return {
+        id: parseInt(route.params.id)
+      }
+    }
   },
   {
     path: '/posts/:id/edit',

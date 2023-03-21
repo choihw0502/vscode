@@ -18,7 +18,6 @@
           <ul class="navbar-nav me-auto">
             <li class="nav-item" v-for="app in appList" :key="app.app_cd">
               <RouterLink class="nav-link" active-class="active" :to="app.app_cd">
-                {{ app.app_cd }}
                 {{ app.app_nm }}
               </RouterLink>
             </li>

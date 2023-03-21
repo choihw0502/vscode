@@ -33,13 +33,25 @@
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
+import { getPostById } from '@/api/posts'
+import { ref } from 'vue'
 
-// const props = defaultProps({
-//   id: String
-// })
+const props = defaultProps({
+  // id: String
+  id: Number
+})
+console.log(props)
 const route = useRoute()
 const router = useRouter()
 const id = route.params.id
+const form = ref({})
+
+const fetchPost = () => {
+  const data = getPostById(id)
+  form.value = { ...data }
+}
+fetchPost()
+
 const goListPage = () => {
   router.push({
     name: 'postList'
