@@ -6,13 +6,9 @@ import LbView from './layout/LbView.vue'
 
 <template>
   <LbHeader></LbHeader>
-  <div style="width: 100%; height: auto">
-    <div style="width: 30%; float: left; background-color: black">
-      <LbNavi></LbNavi>
-    </div>
-    <div style="width: 70%; float: left; background-color: bisque">
-      <LbView></LbView>
-    </div>
+  <div style="display: flex; min-height: 657px; max-height: 1280px">
+    <LbNavi></LbNavi>
+    <LbView></LbView>
   </div>
 </template>
 

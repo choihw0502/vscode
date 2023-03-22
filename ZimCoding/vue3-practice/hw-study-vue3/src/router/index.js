@@ -23,20 +23,22 @@ import PostCreateView from '@/views/posts/PostCreateView.vue'
 const routes = [
   {
     path: '/',
+    name: 'HOME',
     component: HomeView
   },
   {
     path: '/CMS',
+    name: 'CMS',
     component: AboutView
   },
   {
     path: '/AIF',
-    name: 'postList',
+    name: 'AIF',
     component: PostListView
   },
   {
-    path: '/test',
-    name: 'test',
+    path: '/myHome',
+    name: 'MYP',
     component: NestedView
   },
   {

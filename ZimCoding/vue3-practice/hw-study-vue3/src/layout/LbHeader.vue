@@ -1,50 +1,47 @@
 <template>
-  <header>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-      <div class="container-fluid">
-        <RouterLink class="navbar-brand" active-class="active" to="/">대메뉴</RouterLink>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item" v-for="app in appList" :key="app.app_cd">
-              <RouterLink class="nav-link" active-class="active" :to="app.app_cd">
-                {{ app.app_nm }}
-              </RouterLink>
-            </li>
-            <!-- <li class="nav-item">
-              <RouterLink class="nav-link" active-class="active" to="/about"> About </RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" active-class="active" to="/posts"> 게시글 </RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" active-class="active" to="/nested"> Nested </RouterLink>
-            </li> -->
-          </ul>
-          <div class="d-flex" role="search">
-            <button class="btn btn-outline-light" type="button" @click="goPage">글쓰기</button>
-          </div>
+  <header class="p-2 text-bg-dark">
+    <div class="container">
+      <div
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+      >
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <RouterLink
+            tag="li"
+            :class="{ 'nav-item nav-link px-2 text-secondary': true }"
+            active-class="active text-white"
+            :to="{ name: app.app_cd }"
+            v-for="app in appList"
+            :key="app.app_cd"
+          >
+            {{ app.app_nm }}
+          </RouterLink>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input
+            type="search"
+            class="form-control form-control-dark text-bg-dark"
+            placeholder="Search..."
+            aria-label="Search"
+          />
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-light me-2">Login</button>
+          <button type="button" class="btn btn-warning">Sign-up</button>
         </div>
       </div>
-    </nav>
+    </div>
   </header>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
 import { getApps } from '@/api/application'
+// data
 const appList = getApps()
 
+// router 설정
 const router = useRouter()
 const goPage = () => {
   router.push({

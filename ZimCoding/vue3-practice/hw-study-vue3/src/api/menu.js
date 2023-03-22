@@ -481,19 +481,6 @@ const menuList = [
     mdfr_id: 'lhs'
   },
   {
-    menu_cd: 'ME10000162',
-    menu_nm_cd: 'SAMPLE5',
-    menu_order: 5,
-    app_cd: 'CMS',
-    devsc_cd: 'DEVSC-00000052',
-    upper_menu_cd: 'ME10000217',
-    del_yn: 'N',
-    reg_date: '2022-07-06T07:05:52.114Z',
-    regr_id: '테이크솔루션',
-    mdf_date: '2022-07-06T07:05:52.114Z',
-    mdfr_id: '테이크솔루션'
-  },
-  {
     menu_cd: 'ME10000170',
     menu_nm_cd: 'TEST3',
     menu_order: 6,
@@ -637,19 +624,6 @@ const menuList = [
     mdfr_id: '테이크솔루션'
   },
   {
-    menu_cd: 'ME10000220',
-    menu_nm_cd: 'SAMPLE6',
-    menu_order: 110,
-    app_cd: 'CMS',
-    devsc_cd: 'DEVSC-00000099',
-    upper_menu_cd: 'ME00000010',
-    del_yn: 'N',
-    reg_date: '2023-01-19T04:56:37.067Z',
-    regr_id: '테이크솔루션',
-    mdf_date: '2023-01-19T05:00:08.230Z',
-    mdfr_id: '테이크솔루션'
-  },
-  {
     menu_cd: 'ME10000221',
     menu_nm_cd: 'AIPLATFORM',
     menu_order: 10,
@@ -687,19 +661,6 @@ const menuList = [
     regr_id: '테이크솔루션',
     mdf_date: '2023-01-25T08:00:43.776Z',
     mdfr_id: '테이크솔루션'
-  },
-  {
-    menu_cd: 'ME10000224',
-    menu_nm_cd: 'TEAMMANAGEMENT',
-    menu_order: 107,
-    app_cd: 'CMS',
-    devsc_cd: 'DEVSC-00000103',
-    upper_menu_cd: 'ME00000010',
-    del_yn: 'N',
-    reg_date: '2023-01-31T04:25:10.542Z',
-    regr_id: '관리자',
-    mdf_date: '2023-01-31T04:25:10.542Z',
-    mdfr_id: '관리자'
   },
   {
     menu_cd: 'ME10000225',

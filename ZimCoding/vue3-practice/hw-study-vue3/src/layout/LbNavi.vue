@@ -1,38 +1,36 @@
 <template>
-  <div class="flex-shrink-0 p-3 bg-white">
-    <a
-      href="/"
-      class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom"
-    >
-      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-5 fw-semibold">메뉴정보</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-      <li class="mb-1" v-for="m1 in menuList" :key="m1.menu_cd">
-        <button
-          class="btn btn-toggle align-items-center rounded collapsed"
+  <nav id="sidebar" class="bg-dark">
+    <ul class="list-unstyled">
+      <li class="active" v-for="m1 in menuList" :key="m1.menu_cd">
+        <a
+          class="dropdown-toggle collapsed"
           data-bs-toggle="collapse"
           :data-bs-target="'#' + m1.menu_cd"
           aria-expanded="false"
         >
-          <h5>{{ m1.menu_nm_cd }}</h5>
-        </button>
+          <h5>{{ getMessages(m1.menu_nm_cd) }}</h5>
+        </a>
         <div class="collapse" :id="m1.menu_cd" v-if="!!m1.children">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li class="link-dark rounded" v-for="m2 in m1.children" :key="m2.menu_cd">
+          <ul class="list-unstyled">
+            <li class="active" v-for="m2 in m1.children" :key="m2.menu_cd">
               <a
-                class="btn btn-toggle align-items-center rounded collapsed"
+                class="dropdown-toggle collapsed"
                 data-bs-toggle="collapse"
-                data-bs-target="'#' + m2.menu_cd"
+                :data-bs-target="'#' + m2.menu_cd"
                 aria-expanded="false"
               >
-                <h6>{{ m2.menu_nm_cd }}</h6>
+                <h6>{{ getMessages(m2.menu_nm_cd) }}</h6>
               </a>
               <div class="collapse" :id="m2.menu_cd" v-if="!!m2.children">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li v-for="m3 in m2.children" :key="m3.menu_cd">
-                    <a class="link-dark rounded">
-                      <h6>{{ m3.menu_nm_cd }}</h6>
+                <ul class="list-unstyled">
+                  <li class="rounded" v-for="m3 in m2.children" :key="m3.menu_cd">
+                    <a
+                      class="dropdown-toggle collapsed"
+                      data-bs-toggle="collapse"
+                      :data-bs-target="'#' + m3.menu_cd"
+                      aria-expanded="false"
+                    >
+                      <h6>{{ getMessages(m3.menu_nm_cd) }}</h6>
                     </a>
                   </li>
                 </ul>
@@ -41,63 +39,8 @@
           </ul>
         </div>
       </li>
-      <!-- <li class="mb-1">
-        <button
-          class="btn btn-toggle align-items-center rounded collapsed"
-          data-bs-toggle="collapse"
-          data-bs-target="#dashboard-collapse"
-          aria-expanded="false"
-        >
-          Dashboard
-        </button>
-        <div class="collapse" id="dashboard-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Weekly</a></li>
-            <li><a href="#" class="link-dark rounded">Monthly</a></li>
-            <li><a href="#" class="link-dark rounded">Annually</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="mb-1">
-        <button
-          class="btn btn-toggle align-items-center rounded collapsed"
-          data-bs-toggle="collapse"
-          data-bs-target="#orders-collapse"
-          aria-expanded="false"
-        >
-          Orders
-        </button>
-        <div class="collapse" id="orders-collapse" style="">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New</a></li>
-            <li><a href="#" class="link-dark rounded">Processed</a></li>
-            <li><a href="#" class="link-dark rounded">Shipped</a></li>
-            <li><a href="#" class="link-dark rounded">Returned</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="border-top my-3"></li>
-      <li class="mb-1">
-        <button
-          class="btn btn-toggle align-items-center rounded collapsed"
-          data-bs-toggle="collapse"
-          data-bs-target="#account-collapse"
-          aria-expanded="false"
-        >
-          Account
-        </button>
-        <div class="collapse" id="account-collapse" style="">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New...</a></li>
-            <li><a href="#" class="link-dark rounded">Profile</a></li>
-            <li><a href="#" class="link-dark rounded">Settings</a></li>
-            <li><a href="#" class="link-dark rounded">Sign out</a></li>
-          </ul>
-        </div>
-      </li> -->
     </ul>
-  </div>
+  </nav>
 </template>
 <script>
 export function getPosts() {
@@ -107,10 +50,176 @@ export function getPosts() {
 
 <script setup>
 import { getMenus, getUpperMenu } from '@/api/menu'
+import { getMessages } from '@/api/message'
 import { reactive } from 'vue'
 
 const menuList = getUpperMenu()
 console.log(menuList)
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+}
+
+p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.navbar {
+  padding: 15px 10px;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 40px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px dashed #ddd;
+  margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: #7386d5;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+  padding: 20px;
+  background: #6d7fcc;
+}
+
+#sidebar ul.components {
+  /* padding: 20px 0; */
+  /* border-bottom: 1px solid #47748b; */
+}
+
+#sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+}
+
+#sidebar ul li a:hover {
+  color: #7386d5;
+  background: #fff;
+}
+
+#sidebar ul li.active > a,
+a[aria-expanded='true'] {
+  color: #fff;
+  background: #212529;
+}
+
+a[data-toggle='collapse'] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #212529;
+}
+
+ul.CTAs {
+  padding: 20px;
+}
+
+ul.CTAs a {
+  text-align: center;
+  font-size: 0.9em !important;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+a.download {
+  background: #fff;
+  color: #7386d5;
+}
+
+a.article,
+a.article:hover {
+  background: #6d7fcc !important;
+  color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+  width: 100%;
+  padding: 20px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #sidebarCollapse span {
+    display: none;
+  }
+}
+</style>
