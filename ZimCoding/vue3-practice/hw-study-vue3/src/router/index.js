@@ -8,7 +8,7 @@
 	- Composition API : useRouter()
 	- template 				: $router
 */
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
@@ -88,6 +88,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory('/'),
+  // history: createWebHashHistory('/'),
   routes
 })
 
