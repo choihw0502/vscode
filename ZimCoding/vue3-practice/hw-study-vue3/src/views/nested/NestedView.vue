@@ -5,17 +5,19 @@
         <RouterLink
           class="nav-link"
           active-class="active"
-          :to="{ name: 'NestedOne', replace: true }"
-          >Nested One</RouterLink
+          :to="{ name: 'NestedOne', replace: false }"
         >
+          Nested One
+        </RouterLink>
       </li>
       <li class="nav-item">
         <RouterLink
           class="nav-link"
           active-class="active"
           :to="{ name: 'NestedTwo', replace: true }"
-          >Nested Two</RouterLink
         >
+          Nested Two
+        </RouterLink>
       </li>
     </ul>
   </div>

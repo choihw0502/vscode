@@ -54,7 +54,6 @@ import { getMessages } from '@/api/message'
 import { reactive } from 'vue'
 
 const menuList = getUpperMenu()
-console.log(menuList)
 </script>
 
 <style scoped>

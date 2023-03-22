@@ -1,14 +1,27 @@
 <template>
   <div>
-    <h2>Home View ( test Page)</h2>
-    <p>{{ $route }}</p>
-    <button v-on:click="test">adf{{ obj }}</button>
-    <button v-on:click="test1">adf{{ obj }}</button>
+    <!-- <h2>Home View ( test Page)</h2> -->
+    <!-- <p>{{ $route }}</p> -->
+    <h2>Memo</h2>
+    <p>{{ content }}</p>
+    <!-- <button v-on:click="test">adf{{ obj }}</button>
+    <button v-on:click="test1">adf{{ obj }}</button> -->
   </div>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
+const content = ref('123123')
+content.value = `
+라이프 사이클 훅
+onBeforeMount(() => {
+  console.log('Before Mount!')
+})
+onMounted(() => {
+  console.log('Mounted!')
+})
+;
+`
 
 const count = ref(1)
 const obj = reactive({ count })

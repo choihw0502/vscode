@@ -5,7 +5,7 @@
     <p v-show="false">query : {{ $route.query.searchText }}</p>
     <p v-show="false">hash : {{ $route.hash }}</p>
     <!-- test용 코드 -->
-    <h2>제목 {{ route.params.id }}</h2>
+    <h2>제목 {{ props.id }}</h2>
     <p>내용</p>
     <p class="text-muted">날짜</p>
     <hr class="my-2" />
@@ -36,32 +36,32 @@ import { useRoute, useRouter } from 'vue-router'
 import { getPostById } from '@/api/posts'
 import { ref } from 'vue'
 
-const props = defaultProps({
+const props = defineProps({
   // id: String
-  id: Number
+  id: { type: [String, Number] }
 })
-console.log(props)
-const route = useRoute()
+console.log(props.id)
+// const route = useRoute()
 const router = useRouter()
-const id = route.params.id
+// const id = route.params.id
 const form = ref({})
 
 const fetchPost = () => {
-  const data = getPostById(id)
+  const data = getPostById(props.id)
   form.value = { ...data }
 }
 fetchPost()
 
 const goListPage = () => {
   router.push({
-    name: 'postList'
+    name: 'AIF'
   })
 }
-console.log(route)
+// console.log(route)
 const goEditPage = () => {
   router.push({
     name: 'postEdit',
-    param: { id }
+    param: { id: props.id }
   })
 }
 const goDelPage = () => {}
