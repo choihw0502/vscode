@@ -1,15 +1,22 @@
 <template>
   <div>
+    <hr class="my-4" />
     <!-- <h2>Home View ( test Page)</h2> -->
     <!-- <p>{{ $route }}</p> -->
     <h2>Memo</h2>
     <p>{{ content }}</p>
     <!-- <button v-on:click="test">adf{{ obj }}</button>
     <button v-on:click="test1">adf{{ obj }}</button> -->
+    <hr class="my-4" />
+    <Grid :items="items" v-slot="{ item }">
+      <AppCard>{{ item }}</AppCard>
+    </Grid>
   </div>
 </template>
 
 <script setup>
+import AppCard from '@/components/AppCard.vue'
+import Grid from '@/components/default/Grid.vue'
 import { reactive, ref } from 'vue'
 const content = ref('123123')
 content.value = `
@@ -22,7 +29,9 @@ onMounted(() => {
 })
 ;
 `
+const items = ref(['a', 'b', 'c', 'd', 'e'])
 
+/*      연습장       */
 const count = ref(1)
 const obj = reactive({ count })
 

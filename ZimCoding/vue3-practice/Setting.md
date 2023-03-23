@@ -88,6 +88,8 @@ npm install vue-router
 
 ## json-server 설치(테스트용)
 
+[json-server]https://github.com/typicode/json-server
+
 ```bash
 npm install -D json-server
 ```

@@ -1,11 +1,9 @@
 <script setup></script>
 
 <template>
-  <main>
-    <div class="container py-4">
-      <RouterView></RouterView>
-    </div>
-  </main>
+  <div class="container py-4">
+    <RouterView></RouterView>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

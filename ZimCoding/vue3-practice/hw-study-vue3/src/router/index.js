@@ -58,7 +58,7 @@ const routes = [
     component: PostEditView
   },
   {
-    path: '/posts/:id/create',
+    path: '/posts/create',
     name: 'postCreate',
     component: PostCreateView
   },

@@ -42,12 +42,6 @@
     </ul>
   </nav>
 </template>
-<script>
-export function getPosts() {
-  return menuList
-}
-</script>
-
 <script setup>
 import { getMenus, getUpperMenu } from '@/api/menu'
 import { getMessages } from '@/api/message'

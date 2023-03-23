@@ -5,10 +5,10 @@
     <p v-show="false">query : {{ $route.query.searchText }}</p>
     <p v-show="false">hash : {{ $route.hash }}</p>
     <!-- test용 코드 -->
-    <h2>제목 {{ props.id }}</h2>
-    <p>내용</p>
-    <p class="text-muted">날짜</p>
-    <hr class="my-2" />
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p class="text-muted">{{ post.createdAt }}</p>
+    <hr class="my-4" />
     <div class="row">
       <div class="col-auto">
         <button class="btn btn-outline-dark">이전글</button>
@@ -33,25 +33,29 @@
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { getPostById } from '@/api/posts'
+import { deletePost, getPostById } from '@/api/posts'
 import { ref } from 'vue'
 
 const props = defineProps({
   // id: String
   id: { type: [String, Number] }
 })
-console.log(props.id)
-// const route = useRoute()
-const router = useRouter()
-// const id = route.params.id
-const form = ref({})
 
-const fetchPost = () => {
-  const data = getPostById(props.id)
-  form.value = { ...data }
+const post = ref({})
+const fetchPost = async () => {
+  const { data } = await getPostById(props.id)
+  setPost(data)
+}
+// {} 대괄호 안에 데이터는 구조분해할당이라고 object 객체안의 key값을 지정한다
+const setPost = ({ title, content, createdAt }) => {
+  post.value.title = title
+  post.value.content = content
+  post.value.createdAt = createdAt
 }
 fetchPost()
 
+// const route = useRoute()
+const router = useRouter()
 const goListPage = () => {
   router.push({
     name: 'AIF'
@@ -64,7 +68,16 @@ const goEditPage = () => {
     param: { id: props.id }
   })
 }
-const goDelPage = () => {}
+const goDelPage = () => {
+  try {
+    if (confirm('삭제하시겠습니까?') === false) return
+
+    deletePost(props.id)
+    goListPage()
+  } catch (error) {
+    console.log('PostDetailView.delete > ', error)
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>
