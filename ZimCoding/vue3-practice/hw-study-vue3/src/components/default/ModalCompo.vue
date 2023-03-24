@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import Modal from '@/components/default/Modal.vue'
 import { computed, Transition } from 'vue'
 const props = defineProps({
   modelValue: {

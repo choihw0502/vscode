@@ -56,6 +56,7 @@
       <!-- v-model 로 ModalCompo 구성-->
       <!-- app이라는 ID 밑으로 해당 element를 생성한다. -->
       <Teleport to="#app">
+        <!-- v-model="show" -->
         <ModalCompo
           v-model="show"
           :title="item.title"
@@ -83,17 +84,11 @@
 </template>
 
 <script setup>
-import ItemCard from '@/components/default/ItemCard.vue'
 import { getPosts } from '@/api/posts'
-import { ref, computed, watchEffect } from 'vue'
+import { ref, reactive, computed, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import AppCard from '@/components/AppCard.vue'
 import PostDetailView from './PostDetailView.vue'
-import Pagination from '@/components/default/Pagination.vue'
-import Grid from '@/components/default/Grid.vue'
-import Filter from '@/components/default/Filter.vue'
-import Modal from '@/components/default/Modal.vue'
-import ModalCompo from '@/components/default/ModalCompo.vue'
 
 const router = useRouter()
 

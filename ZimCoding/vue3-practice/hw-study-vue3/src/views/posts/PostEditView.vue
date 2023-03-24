@@ -17,9 +17,6 @@
 import { ref } from 'vue'
 import { getPostById, updatePost } from '@/api/posts'
 import { useRoute, useRouter } from 'vue-router'
-import InputForm from '@/components/default/InputForm.vue'
-import Alert from '@/components/default/Alert.vue'
-import GroupAlert from '@/components/default/GroupAlert.vue'
 
 const router = useRouter()
 const route = useRoute()

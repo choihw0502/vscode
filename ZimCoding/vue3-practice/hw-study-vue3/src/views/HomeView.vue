@@ -11,13 +11,24 @@
     <Grid :items="items" v-slot="{ item }">
       <AppCard>{{ item }}</AppCard>
     </Grid>
+    <button class="btn btn-primary" @click="plugOption.say">Click plugin</button>
   </div>
 </template>
-
+<script>
+export default {
+  /*
+plugin 사용하기 위해서는 setup 안의 life cycle안에서는 사용할 수 없다
+전역으로 등록한 obj.js안에 globalconfig안 속성 가져오기
+*/
+  created() {
+    // console.log(this.$plugtest)
+    // this.$plugtest.say()
+  }
+}
+</script>
 <script setup>
 import AppCard from '@/components/AppCard.vue'
-import Grid from '@/components/default/Grid.vue'
-import { reactive, ref } from 'vue'
+import { reactive, inject, ref } from 'vue'
 const content = ref('123123')
 content.value = `
 라이프 사이클 훅
@@ -30,7 +41,9 @@ onMounted(() => {
 ;
 `
 const items = ref(['a', 'b', 'c', 'd', 'e'])
-
+/* plugin Test  vue.inject  import */
+const plugOption = inject('plugOption')
+console.log(plugOption)
 /*      연습장       */
 const count = ref(1)
 const obj = reactive({ count })

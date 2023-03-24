@@ -13,7 +13,6 @@
 
 <script setup>
 import { createPost } from '@/api/posts'
-import InputForm from '@/components/default/InputForm.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
