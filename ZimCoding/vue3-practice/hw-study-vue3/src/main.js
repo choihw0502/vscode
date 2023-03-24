@@ -7,14 +7,17 @@ import router from './router'
 const app = createApp(App)
 app.use(funcPlugins)
 app.use(objPlugins, { name: 'test' })
-app.use(compo)
 app.use(router)
+app.use(compo)
+app.use(direct)
 app.mount('#app')
 
 import 'bootstrap/dist/js/bootstrap.js'
 import funcPlugins from './plugins/func'
 import objPlugins from './plugins/obj'
 import compo from './plugins/global-compo'
+import direct from './plugins/global-direct'
+
 /* 
 console.log('MODE: ', import.meta.env.MODE)
 console.log('BASE_URL: ', import.meta.env.BASE_URL)

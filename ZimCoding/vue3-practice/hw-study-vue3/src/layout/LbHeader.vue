@@ -19,6 +19,7 @@
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
           <input
+            v-focus
             type="search"
             class="form-control form-control-dark text-bg-dark"
             placeholder="Search..."
@@ -38,8 +39,13 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { getApps } from '@/api/application'
+
 // data
 const appList = getApps()
+
+// const vFocus = {
+//   mounted: (el) => el.focus()
+// }
 
 // router 설정
 const router = useRouter()
