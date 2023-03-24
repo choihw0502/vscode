@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>게시글 목록</h2>
+
     <hr class="my-3" />
     <Filter v-model:title="params.title_like" v-model:limit="params._limit" />
     <!-- <form @submit.prevent>
@@ -26,7 +27,42 @@
         :content="item.content"
         :created-at="item.createdAt"
         @click="goPage(item.id)"
-      ></ItemCard>
+        @modal="openModal(item)"
+      >
+      </ItemCard>
+      <!-- Props & Emit으로 Modal 구성 -->
+      <!-- <Modal :show="show" title="게시글" @close="closeModal()"> 
+        <template #default>
+          <div class="row g-3">
+            <div class="col-3 text-muted">제목</div>
+            <div class="col-9">{{ item.title }}</div>
+            <div class="col-3 text-muted">내용</div>
+            <div class="col-9">{{ item.content }}</div>
+            <div class="col-3 text-muted">생성일</div>
+            <div class="col-9">{{ item.createdAt }}</div>
+          </div>
+        </template>
+        <template #actions>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            @click="closeModal()"
+          >
+            Close
+          </button>
+        </template>
+      </Modal>-->
+      <!-- v-model 로 ModalCompo 구성-->
+      <!-- app이라는 ID 밑으로 해당 element를 생성한다. -->
+      <Teleport to="#app">
+        <ModalCompo
+          v-model="show"
+          :title="item.title"
+          :content="item.content"
+          :createdAt="item.createdAt"
+        />
+      </Teleport>
     </Grid>
     <!-- </div>
     </div> -->
@@ -56,6 +92,8 @@ import PostDetailView from './PostDetailView.vue'
 import Pagination from '@/components/default/Pagination.vue'
 import Grid from '@/components/default/Grid.vue'
 import Filter from '@/components/default/Filter.vue'
+import Modal from '@/components/default/Modal.vue'
+import ModalCompo from '@/components/default/ModalCompo.vue'
 
 const router = useRouter()
 
@@ -111,6 +149,14 @@ const goPage = (id) => {
     },
     hash: '#world'
   })
+}
+
+const show = ref(false)
+const openModal = () => {
+  show.value = true
+}
+const closeModal = () => {
+  show.value = false
 }
 </script>
 
