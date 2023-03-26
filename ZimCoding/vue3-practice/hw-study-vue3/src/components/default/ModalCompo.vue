@@ -8,6 +8,8 @@
         <div class="col-9">{{ content }}</div>
         <div class="col-3 text-muted">생성일</div>
         <div class="col-9">{{ createdAt }}</div>
+        <div class="col-3 text-muted">현재날짜</div>
+        <div class="col-9">{{ $day(nowDt).format('YYYY.MM.DD') }}</div>
       </div>
     </template>
     <template #actions>
@@ -37,6 +39,9 @@ const props = defineProps({
     type: String
   },
   createdAt: {
+    type: String
+  },
+  nowDt: {
     type: String
   }
 })

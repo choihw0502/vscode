@@ -8,6 +8,7 @@
     <h2>{{ post.title }}</h2>
     <p>{{ post.content }}</p>
     <p class="text-muted">{{ post.createdAt }}</p>
+    <p class="text-muted">{{ $day(post.nowDt).format('YYYY/MM/DD') }}</p>
     <hr class="my-4" />
     <div class="row">
       <div class="col-auto">
@@ -47,10 +48,13 @@ const fetchPost = async () => {
   setPost(data)
 }
 // {} 대괄호 안에 데이터는 구조분해할당이라고 object 객체안의 key값을 지정한다
-const setPost = ({ title, content, createdAt }) => {
+const setPost = ({ title, content, createdAt, nowDt }) => {
   post.value.title = title
   post.value.content = content
   post.value.createdAt = createdAt
+  console.log(nowDt)
+  post.value.nowDt = nowDt || Date.now()
+  console.log(post.value.nowDt)
 }
 fetchPost()
 

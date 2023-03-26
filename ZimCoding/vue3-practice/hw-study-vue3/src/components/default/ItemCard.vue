@@ -7,6 +7,9 @@
     <p class="text-muted">
       {{ createdAt }}
     </p>
+    <p class="text-muted">
+      {{ dayjs(nowDt).format('YYYY/MM/DD HH:mm:ss') }}
+    </p>
     <template #footer>
       <div class="d-flex flex-row-reverse">
         <button class="btn p-0" @click.stop="$emit('modal')">
@@ -18,6 +21,7 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
 import AppCard from '../AppCard.vue'
 
 defineProps({
@@ -31,9 +35,14 @@ defineProps({
   },
   createdAt: {
     type: [String, Number, Date]
+  },
+  nowDt: {
+    type: [String, Number, Date]
   }
 })
 defineEmits(['modal'])
+
+const dayjs = inject('dayjs')
 </script>
 
 <style lang="scss" scoped></style>

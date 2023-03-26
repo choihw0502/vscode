@@ -10,6 +10,7 @@ app.use(objPlugins, { name: 'test' })
 app.use(router)
 app.use(compo)
 app.use(direct)
+app.use(dayjs)
 app.mount('#app')
 
 import 'bootstrap/dist/js/bootstrap.js'
@@ -17,6 +18,7 @@ import funcPlugins from './plugins/func'
 import objPlugins from './plugins/obj'
 import compo from './plugins/global-compo'
 import direct from './plugins/global-direct'
+import dayjs from './plugins/dayjs'
 
 /* 
 console.log('MODE: ', import.meta.env.MODE)
