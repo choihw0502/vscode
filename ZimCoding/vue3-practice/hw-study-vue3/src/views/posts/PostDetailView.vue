@@ -39,12 +39,14 @@ import { useRoute, useRouter } from 'vue-router'
 import { deletePost, getPostById } from '@/api/posts'
 import { ref } from 'vue'
 import { useAxios } from '@/composables/axios'
+import { useAlert } from '@/composables/alert'
 
 const props = defineProps({
   // id: String
   id: { type: [String, Number] }
 })
-/* 
+const { vAlert, vSuccess } = useAlert
+/*
 const post = ref({})
 const fetchPost = async () => {
   const { data } = await getPostById(props.id)
@@ -59,8 +61,8 @@ post.value.title = title
 }
 fetchPost()
  */
-const { data: post, error, loading, response } = useAxios('/posts/' + props.id)
-console.log(post)
+const { error, loading, data: post } = useAxios('/posts/' + props.id)
+
 const removeError = ref(null)
 const removeLoading = ref(false)
 const goDelPage = async () => {

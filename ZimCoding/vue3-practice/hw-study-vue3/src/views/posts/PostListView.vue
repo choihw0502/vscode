@@ -87,8 +87,8 @@
 </template>
 
 <script setup>
-import { getPosts } from '@/api/posts'
-import { ref, reactive, computed, watchEffect } from 'vue'
+// import { getPosts } from '@/api/posts'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import AppCard from '@/components/AppCard.vue'
 import PostDetailView from './PostDetailView.vue'
@@ -106,7 +106,7 @@ const params = ref({
 })
 
 //composables/axios Call
-const { data: posts, error, loading, response } = useAxios('/posts', { method: 'get', params })
+const { data: posts, error, loading, response } = useAxios('/posts', { params })
 const totalCount = computed(() => response.value.headers['x-total-count'])
 const pageCount = computed(() => Math.ceil(totalCount.value / params.value._limit))
 /*
@@ -149,11 +149,11 @@ const goPage = (id) => {
     name: 'postDetail',
     params: posts.value.find((post) => {
       return post.id == id
-    }),
-    query: {
-      searchText: 'hello'
-    },
-    hash: '#world'
+    })
+    // query: {
+    //   searchText: 'hello'
+    // },
+    // hash: '#world'
   })
 }
 
