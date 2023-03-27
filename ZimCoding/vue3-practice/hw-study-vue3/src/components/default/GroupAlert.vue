@@ -1,17 +1,19 @@
 <template>
-  <div class="app-alert">
-    <TransitionGroup name="slide-fade">
-      <div
-        v-for="({ message, type }, idx) in items"
-        :key="idx"
-        class="alert"
-        :class="styleClass(type)"
-        role="alert"
-      >
-        {{ message }}
-      </div>
-    </TransitionGroup>
-  </div>
+  <Teleport to="#telmodal">
+    <div class="app-alert">
+      <TransitionGroup name="slide-fade">
+        <div
+          v-for="({ message, type }, idx) in items"
+          :key="idx"
+          class="alert"
+          :class="styleClass(type)"
+          role="alert"
+        >
+          {{ message }}
+        </div>
+      </TransitionGroup>
+    </div>
+  </Teleport>
 </template>
 
 <script setup>

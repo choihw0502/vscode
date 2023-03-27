@@ -6,6 +6,18 @@
       "createdAt": "2023. 3. 23.",
       "nowDt": "1679807922775",
       "id": 1
+    },
+    {
+      "title": "dayjs plugin setup",
+      "content": "플러그인 호출 및 생성  [ install해서 전역으로 사 ]\nimport dayjs from './plugins/dayjs'\nexport default {\n  install(vue) {\n    //생성된 vue 노드에 $day로 propertie 등록\n    vue.config.globalProperties.$day = dayjs\n    //setup 함수에서 접근하기 위한 등록\n    vue.provide('dayjs', dayjs)\n  }\n}\n\nroot 경로에 import [main.js]\nimport dayjs from './plugins/dayjs'\n\n사용 [ *.vue 화면에서 사용]\ntemplat : {{ $day(nowDt).format('YYYY.MM.DD') }}\n및\nconst dayjs = inject('dayjs')\ntemplat : {{ dayjs(nowDt).format('YYYY/MM/DD HH:mm:ss') }}\n",
+      "createdAt": "2023. 3. 27.",
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
     }
   ],
   "comments": [

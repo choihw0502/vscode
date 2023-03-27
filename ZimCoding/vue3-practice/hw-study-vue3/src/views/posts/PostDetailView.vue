@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <Loading v-if="loading"></Loading>
+  <Error v-else-if="error" :message="error.message"></Error>
+  <div v-else>
     <!-- test용 코드 -->
     <p v-show="false">params : {{ $route.params }}</p>
     <p v-show="false">query : {{ $route.query.searchText }}</p>
@@ -36,12 +38,13 @@
 import { useRoute, useRouter } from 'vue-router'
 import { deletePost, getPostById } from '@/api/posts'
 import { ref } from 'vue'
+import { useAxios } from '@/composables/axios'
 
 const props = defineProps({
   // id: String
   id: { type: [String, Number] }
 })
-
+/* 
 const post = ref({})
 const fetchPost = async () => {
   const { data } = await getPostById(props.id)
@@ -49,14 +52,31 @@ const fetchPost = async () => {
 }
 // {} 대괄호 안에 데이터는 구조분해할당이라고 object 객체안의 key값을 지정한다
 const setPost = ({ title, content, createdAt, nowDt }) => {
-  post.value.title = title
+post.value.title = title
   post.value.content = content
   post.value.createdAt = createdAt
-  console.log(nowDt)
   post.value.nowDt = nowDt || Date.now()
-  console.log(post.value.nowDt)
 }
 fetchPost()
+ */
+const { data: post, error, loading, response } = useAxios('/posts/' + props.id)
+console.log(post)
+const removeError = ref(null)
+const removeLoading = ref(false)
+const goDelPage = async () => {
+  try {
+    if (confirm('삭제하시겠습니까?') === false) return
+    removeLoading.value = true
+    await deletePost(props.id)
+    vSuccess('삭제가 완료되었습니다.')
+    goListPage()
+  } catch (err) {
+    vAlert(err.message)
+    removeError.value = err
+  } finally {
+    removeLoading.value = false
+  }
+}
 
 // const route = useRoute()
 const router = useRouter()
@@ -71,16 +91,6 @@ const goEditPage = () => {
     name: 'postEdit',
     param: { id: props.id }
   })
-}
-const goDelPage = () => {
-  try {
-    if (confirm('삭제하시겠습니까?') === false) return
-
-    deletePost(props.id)
-    goListPage()
-  } catch (error) {
-    console.log('PostDetailView.delete > ', error)
-  }
 }
 </script>
 

@@ -7,6 +7,8 @@ import ItemCard from '@/components/default/ItemCard.vue'
 import Modal from '@/components/default/Modal.vue'
 import ModalCompo from '@/components/default/ModalCompo.vue'
 import Pagination from '@/components/default/Pagination.vue'
+import Error from '@/components/default/Error.vue'
+import Loading from '@/components/default/Loading.vue'
 
 export default {
   install(vue) {
@@ -19,5 +21,7 @@ export default {
     vue.component('Modal', Modal)
     vue.component('ModalCompo', ModalCompo)
     vue.component('Pagination', Pagination)
+    vue.component('Error', Error)
+    vue.component('Loading', Loading)
   }
 }

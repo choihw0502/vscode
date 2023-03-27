@@ -1,7 +1,9 @@
 <template>
-  <Transition name="slide-fade">
-    <div v-if="show" class="app-alert alert" :class="styleClass" role="alert">{{ message }}</div>
-  </Transition>
+  <Teleport to="telmodal">
+    <Transition name="slide-fade">
+      <div v-if="show" class="app-alert alert" :class="styleClass" role="alert">{{ message }}</div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>

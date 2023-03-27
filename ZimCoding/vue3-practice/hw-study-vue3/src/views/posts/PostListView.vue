@@ -21,17 +21,20 @@
     <hr class="my-3" />
     <!-- <div class="row g-3"> -->
     <!-- <div v-for="post in posts" :key="post.id" class="col-4"> -->
-    <Grid :items="posts" v-slot="{ item }">
-      <ItemCard
-        :title="item.title"
-        :content="item.content"
-        :created-at="item.createdAt"
-        @click="goPage(item.id)"
-        @modal="openModal(item)"
-      >
-      </ItemCard>
-      <!-- Props & Emit으로 Modal 구성 -->
-      <!-- <Modal :show="show" title="게시글" @close="closeModal()"> 
+    <Loading v-if="loading"></Loading>
+    <Error v-else-if="error" :message="error.message"></Error>
+    <template v-else>
+      <Grid :items="posts" v-slot="{ item }">
+        <ItemCard
+          :title="item.title"
+          :content="item.content"
+          :created-at="item.createdAt"
+          @click="goPage(item.id)"
+          @modal="openModal(item)"
+        >
+        </ItemCard>
+        <!-- Props & Emit으로 Modal 구성 -->
+        <!-- <Modal :show="show" title="게시글" @close="closeModal()"> 
         <template #default>
           <div class="row g-3">
             <div class="col-3 text-muted">제목</div>
@@ -53,27 +56,27 @@
           </button>
         </template>
       </Modal>-->
-      <!-- v-model 로 ModalCompo 구성-->
-      <!-- app이라는 ID 밑으로 해당 element를 생성한다. -->
-      <Teleport to="#app">
+        <!-- v-model 로 ModalCompo 구성-->
+        <!-- app이라는 ID 밑으로 해당 element를 생성한다. -->
+
         <!-- v-model="show" -->
         <ModalCompo
           v-model="show"
-          :title="item.title"
-          :content="item.content"
-          :createdAt="item.createdAt"
+          :title="openItem['title']"
+          :content="openItem['content']"
+          :createdAt="openItem['createdAt']"
         />
-      </Teleport>
-    </Grid>
-    <!-- </div>
+      </Grid>
+
+      <!-- </div>
     </div> -->
 
-    <Pagination
-      :current-page="params._page"
-      :page-count="pageCount"
-      @childpage="(page) => (params._page = page)"
-    />
-
+      <Pagination
+        :current-page="params._page"
+        :page-count="pageCount"
+        @childpage="(page) => (params._page = page)"
+      />
+    </template>
     <hr class="my-5" />
     <template v-if="posts && posts.length > 0">
       <AppCard>
@@ -89,10 +92,11 @@ import { ref, reactive, computed, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import AppCard from '@/components/AppCard.vue'
 import PostDetailView from './PostDetailView.vue'
+import { useAxios } from '@/composables/axios'
 
 const router = useRouter()
 
-const posts = ref([])
+// const posts = ref([])
 const params = ref({
   _sort: 'id',
   _order: 'desc',
@@ -100,22 +104,29 @@ const params = ref({
   _limit: 6,
   title_like: ''
 })
-const totalCount = ref(0)
+
+//composables/axios Call
+const { data: posts, error, loading, response } = useAxios('/posts', { method: 'get', params })
+const totalCount = computed(() => response.value.headers['x-total-count'])
 const pageCount = computed(() => Math.ceil(totalCount.value / params.value._limit))
-const fetchPosts = async () => {
-  /*const { data } = await getPosts()
+/*
+// const fetchPosts = async () => {
+  const { data } = await getPosts()
     posts.value = data
     아래 내용과 동일한 문법
     ({ data: posts.value } = await getPosts())
-  */
-  try {
-    const { data, headers } = await getPosts(params.value)
-    posts.value = data
-    totalCount.value = headers['x-total-count']
-  } catch (error) {
-    console.log('PostListView.Error > ', error)
-  }
-  /*
+ 
+  // try {
+  //   loading.value = true
+  //   const { data, headers } = await getPosts(params.value)
+  //   posts.value = data
+  //   totalCount.value = headers['x-total-count']
+  // } catch (err) {
+  //   error.value = err
+  // } finally {
+  //   loading.value = false
+  // }
+
 Promise 타입 상용문법
   async () => {
     await getPosts()
@@ -125,11 +136,11 @@ Promise 타입 상용문법
   .then(function (result) {
     console.dir(result.data)
   })
-*/
+  
+  fetchPosts()
+  watchEffect(fetchPosts)
 }
-
-fetchPosts()
-watchEffect(fetchPosts)
+*/
 
 const goPage = (id) => {
   // router.push('/posts/' + id);
@@ -147,9 +158,13 @@ const goPage = (id) => {
 }
 
 const show = ref(false)
-const openModal = () => {
+const openItem = reactive({ title: '', content: '', createdAt: '' })
+
+const openModal = (item) => {
   show.value = true
+  Object.assign(openItem, item)
 }
+
 const closeModal = () => {
   show.value = false
 }

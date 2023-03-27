@@ -12,6 +12,7 @@
       <AppCard>{{ item }}</AppCard>
     </Grid>
     <button class="btn btn-primary" @click="plugOption.say">Click plugin</button>
+    <p>마우스 위치: {{ x }}, {{ y }}</p>
   </div>
 </template>
 <script>
@@ -29,6 +30,8 @@ plugin 사용하기 위해서는 setup 안의 life cycle안에서는 사용할 �
 <script setup>
 import AppCard from '@/components/AppCard.vue'
 import { reactive, inject, ref } from 'vue'
+import { useMouse } from '@/composables/mouse.js'
+
 const content = ref('123123')
 content.value = `
 라이프 사이클 훅
@@ -45,6 +48,8 @@ const items = ref(['a', 'b', 'c', 'd', 'e'])
 const plugOption = inject('plugOption')
 console.log(plugOption)
 /*      연습장       */
+const { x, y } = useMouse()
+
 const count = ref(1)
 const obj = reactive({ count })
 
