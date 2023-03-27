@@ -15,15 +15,16 @@ export const useAxios = (url, config = {}, options = {}) => {
   const error = ref(null)
   const loading = ref(false)
   const response = ref(null)
-
   const { onSuccess, onError, immediate } = { ...defaultOptions, ...options }
 
   const { params } = config
+
   //async, await을 안넣어도 되는이유는 반응형으로 감지해서 재반영되기때문에 안넣어도된다.
   const execute = (editData) => {
     data.value = null
     error.value = null
     loading.value = true
+
     axios(url, {
       //전개구문으로 넣기
       ...defaultConfig,
