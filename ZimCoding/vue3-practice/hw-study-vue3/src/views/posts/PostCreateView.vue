@@ -49,7 +49,8 @@ const { error, loading, execute } = useAxios(
   }
 )
 const save = async () => {
-  execute({ ...form.value, createdAt: Date.now() })
+  const test = { ...form.value, createdAt: Date.now() }
+  execute(test)
 }
 
 /*

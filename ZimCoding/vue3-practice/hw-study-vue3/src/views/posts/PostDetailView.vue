@@ -45,7 +45,7 @@ const props = defineProps({
   // id: String
   id: { type: [String, Number] }
 })
-const { vAlert, vSuccess } = useAlert
+const { vAlert, vSuccess } = useAlert()
 /*
 const post = ref({})
 const fetchPost = async () => {
@@ -62,7 +62,31 @@ post.value.title = title
 fetchPost()
  */
 const { error, loading, data: post } = useAxios('/posts/' + props.id)
+const {
+  error: removeError,
+  loading: removeLoading,
+  execute
+} = useAxios(
+  '/posts/' + props.id,
+  { method: 'delete' },
+  {
+    immediate: false,
+    onSuccess: () => {
+      vSuccess('삭제가 완료되었습니다.')
+      goListPage()
+    },
+    onError: (err) => {
+      console.log(err)
+      vAlert(err.message)
+    }
+  }
+)
 
+const goDelPage = () => {
+  if (confirm('삭제하시겠습니까?') === false) return
+  execute()
+}
+/*
 const removeError = ref(null)
 const removeLoading = ref(false)
 const goDelPage = async () => {
@@ -79,7 +103,7 @@ const goDelPage = async () => {
     removeLoading.value = false
   }
 }
-
+ */
 // const route = useRoute()
 const router = useRouter()
 const goListPage = () => {
