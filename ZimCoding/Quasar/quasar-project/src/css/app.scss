@@ -1,0 +1,13 @@
+// app global css in SCSS form
+
+// google web font
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+body {
+  // font-family: 'Gamja Flower', cursive;
+  font-family: 'Cute Font', cursive;
+}
+
+body.body--dark {
+  --q-primary: #161717;
+}
