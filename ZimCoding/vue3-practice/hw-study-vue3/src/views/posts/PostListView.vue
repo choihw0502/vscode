@@ -30,6 +30,7 @@
           :content="item.content"
           :created-at="item.createdAt"
           @click="goPage(item.id)"
+          @detail="selectDetail(item.id)"
           @modal="openModal(item)"
         >
         </ItemCard>
@@ -78,9 +79,9 @@
       />
     </template>
     <hr class="my-5" />
-    <template v-if="posts && posts.length > 0">
+    <template v-if="detailId">
       <AppCard>
-        <PostDetailView :id="posts[0].id"></PostDetailView>
+        <PostDetailView :id="detailId"></PostDetailView>
       </AppCard>
     </template>
   </div>
@@ -106,7 +107,7 @@ const params = ref({
 })
 
 //composables/axios Call
-const { data: posts, error, loading, response } = useAxios('/posts', { params })
+const { data: posts, error, loading, response, execute } = useAxios('/posts', { params })
 const totalCount = computed(() => response.value.headers['x-total-count'])
 const pageCount = computed(() => Math.ceil(totalCount.value / params.value._limit))
 /*
@@ -115,7 +116,7 @@ const pageCount = computed(() => Math.ceil(totalCount.value / params.value._limi
     posts.value = data
     아래 내용과 동일한 문법
     ({ data: posts.value } = await getPosts())
- 
+
   // try {
   //   loading.value = true
   //   const { data, headers } = await getPosts(params.value)
@@ -136,7 +137,7 @@ Promise 타입 상용문법
   .then(function (result) {
     console.dir(result.data)
   })
-  
+
   fetchPosts()
   watchEffect(fetchPosts)
 }
@@ -161,6 +162,7 @@ const show = ref(false)
 const openItem = reactive({ title: '', content: '', createdAt: '' })
 
 const openModal = (item) => {
+  console.log(item)
   show.value = true
   Object.assign(openItem, item)
 }
@@ -168,6 +170,9 @@ const openModal = (item) => {
 const closeModal = () => {
   show.value = false
 }
+
+const detailId = ref(null)
+const selectDetail = (id) => (detailId.value = id)
 </script>
 
 <style lang="scss" scoped></style>

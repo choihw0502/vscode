@@ -12,7 +12,10 @@
     </p>
     <template #footer>
       <div class="d-flex flex-row-reverse">
-        <button class="btn p-0" @click.stop="$emit('modal')">
+        <button class="btn p-1" @click.stop="$emit('detail')">
+          <i class="bi bi-activity"></i>
+        </button>
+        <button class="btn p-1" @click.stop="$emit('modal')">
           <i class="bi bi-airplane-fill"></i>
         </button>
       </div>
@@ -40,7 +43,7 @@ defineProps({
     type: [String, Number, Date]
   }
 })
-defineEmits(['modal'])
+defineEmits(['modal', 'detail'])
 
 const dayjs = inject('dayjs')
 </script>

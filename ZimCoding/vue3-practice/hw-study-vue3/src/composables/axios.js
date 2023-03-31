@@ -16,7 +16,6 @@ export const useAxios = (url, config = {}, options = {}) => {
   const loading = ref(false)
   const response = ref(null)
   const { onSuccess, onError, immediate } = { ...defaultOptions, ...options }
-
   const { params } = config
 
   //async, await을 안넣어도 되는이유는 반응형으로 감지해서 재반영되기때문에 안넣어도된다.
@@ -24,14 +23,15 @@ export const useAxios = (url, config = {}, options = {}) => {
     data.value = null
     error.value = null
     loading.value = true
-
+    console.log(url, editData, immediate)
+    // debugger
     axios(url, {
       //전개구문으로 넣기
       ...defaultConfig,
       ...config,
       params: unref(params),
       //watchEffect로 실행할때 첫번째 callback이 존재하므로 Call할때 Object인지 Check
-      data: typeof editData === 'Object' ? editData : {}
+      data: typeof editData === 'object' ? editData : {}
     })
       .then((res) => {
         response.value = res
@@ -52,7 +52,7 @@ export const useAxios = (url, config = {}, options = {}) => {
     watchEffect(execute)
   } else {
     if (immediate) {
-      execute
+      execute()
     }
   }
 
