@@ -22,6 +22,51 @@
           :icon="darkModeIcon"
           @click="toggleDarkMode"
         ></q-btn>
+        <q-btn round class="q-ml-sm" to="/main-content">
+          <q-avatar size="42px">
+            <img src="/avatar.png" />
+          </q-avatar>
+        </q-btn>
+
+        <div class="q-pa-md">
+          <q-btn label="Account Settings">
+            <q-menu>
+              <div class="row no-wrap q-pa-md">
+                <!-- <q-separator vertical inset class="q-mx-lg" /> -->
+
+                <div class="column items-center">
+                  <!-- <q-avatar size="72px">
+                    <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+                  </q-avatar> -->
+
+                  <div class="flex">
+                    <q-btn
+                      class="q-mt-sm"
+                      outline
+                      color="primary"
+                      label="Login"
+                      push
+                      size="sm"
+                      v-close-popup
+                      to="/login/in"
+                    />
+
+                    <q-btn
+                      class="q-mt-sm"
+                      outline
+                      color="primary"
+                      label="Create"
+                      push
+                      size="sm"
+                      v-close-popup
+                      to="/login/up"
+                    />
+                  </div>
+                </div>
+              </div>
+            </q-menu>
+          </q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -80,11 +125,25 @@ const linksList = [
     to: '/flex-grid-one',
   },
   {
-    title: 'Grid two',
-    caption: 'Grid Sample Second',
+    title: 'Instagram',
+    caption: 'Sample Create',
     icon: 'settings',
     //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/flex-grid-two',
+    to: '/main-content',
+  },
+  {
+    title: 'Form Handling',
+    caption: 'quasar.dev',
+    icon: 'school',
+    //현재화면에서 router로 랜더링할때 to Propertie 사용
+    to: '/form-handling',
+  },
+  {
+    title: 'Quasar Utils',
+    caption: 'quasar.dev',
+    icon: 'school',
+    //현재화면에서 router로 랜더링할때 to Propertie 사용
+    to: '/quasar-utils',
   },
   // {
   //   title: 'Docs',
@@ -131,7 +190,7 @@ const linksList = [
 ];
 </script>
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 import { useQuasar } from 'quasar';
 

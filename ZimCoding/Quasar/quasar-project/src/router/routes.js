@@ -12,8 +12,30 @@ const routes = [
         component: () => import('pages/FlexGridOne.vue'),
       },
       {
-        path: 'flex-grid-two',
-        component: () => import('pages/FlexGridTwo.vue'),
+        path: 'main-content',
+        component: () => import('pages/content/MainContent.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('pages/content/ContentPosts.vue'),
+          },
+          {
+            path: 'save',
+            component: () => import('pages/content/ContentSaves.vue'),
+          },
+          {
+            path: 'tag',
+            component: () => import('pages/content/ContentTags.vue'),
+          },
+        ],
+      },
+      {
+        path: 'form-handling',
+        component: () => import('pages/FormHandling.vue'),
+      },
+      {
+        path: 'quasar-utils',
+        component: () => import('pages/QuasarUtils.vue'),
       },
     ],
   },
@@ -28,6 +50,20 @@ const routes = [
       {
         path: 'sub-page-2',
         component: () => import('pages/sub/SubPageTwo.vue'),
+      },
+    ],
+  },
+  {
+    path: '/login',
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: 'in',
+        component: () => import('pages/login/Signin.vue'),
+      },
+      {
+        path: 'up',
+        component: () => import('src/pages/login/Signup.vue'),
       },
     ],
   },

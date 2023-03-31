@@ -40,19 +40,32 @@
       </div>
     </section>
     <section class="q-mb-xl">
-      <div class="row q-col-gutter-sm">
-        <div class="col-12 col-sm-4 col-md-4 col-lg-3" v-for="n in 19" :key="n">
-          <q-card class="my-card">
-            <q-img ratio="1" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div
-                class="absolute-bottom text-subtitle2 full-height flex flex-center"
-              >
-                Title
-              </div>
-            </q-img>
-          </q-card>
+      <div class="q-pa-md">
+        <div class="q-gutter-y-md" style="max-width: 600px">
+          <q-tabs v-model="tab" dense class="shadow-2">
+            <!-- click 이벤트로 페이지 넘겨야함
+            <q-tab name="mails" label="게시글" to="/" />
+            <q-tab name="alarms" label="저장됨" to="/save" />
+            <q-tab name="movies" label="태그글" to="/tag" />
+           -->
+            <!-- 라우터를 이용한 화면 전환 컴포넌트 -->
+            <q-route-tab icon="mail" to="/main-content/" label="게시글" exact />
+            <q-route-tab
+              icon="alarms"
+              to="/main-content/save"
+              label="저장됨"
+              exact
+            />
+            <q-route-tab
+              icon="movies"
+              to="/main-content/tag"
+              label="태그글"
+              exact
+            />
+          </q-tabs>
         </div>
       </div>
+      <RouterView></RouterView>
     </section>
   </q-page>
 </template>
