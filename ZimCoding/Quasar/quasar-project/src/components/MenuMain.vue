@@ -55,10 +55,13 @@ const fnIconClick = () => {
 
 const router = useRouter();
 const movePage = menu => {
+  let setObj = {};
   if (menu.to) {
-    router.push({
-      path: menu.to,
-    });
+    setObj.path = menu.to;
   }
+  if (menu.menu_cd) {
+    setObj.name = menu.menu_cd;
+  }
+  router.push(setObj);
 };
 </script>
