@@ -792,9 +792,22 @@ const menuList = [
     mdf_date: '2023-03-13T02:36:28.004Z',
     mdfr_id: 'test개발자',
   },
+  // {
+  //   menu_cd: 'ME10000230',
+  //   menu_nm_cd: 'test',
+  //   menu_order: 112,
+  //   app_cd: 'CMS',
+  //   devsc_cd: 'DEVSC-00000107',
+  //   upper_menu_cd: 'ME10000014',
+  //   del_yn: 'N',
+  //   reg_date: '2023-02-06T08:50:49.445Z',
+  //   regr_id: '관리자',
+  //   mdf_date: '2023-03-13T02:36:28.004Z',
+  //   mdfr_id: 'test개발자',
+  // },
 ];
 
-export function getUpperMenu() {
+export function getUpperMenu(appCd) {
   let resultList = [];
 
   menuList
@@ -802,8 +815,8 @@ export function getUpperMenu() {
     .forEach(m => {
       recursiveMenuList(m, resultList);
     });
-
-  return resultList;
+  console.log(appCd);
+  return resultList.filter(menu => menu.app_cd === appCd);
 }
 
 function recursiveMenuList(parent, seed) {

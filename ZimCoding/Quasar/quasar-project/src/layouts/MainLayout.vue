@@ -11,11 +11,35 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <q-toolbar-title>
+          <div class="q-gutter-none">
+            <q-btn
+              outline
+              color="yellow"
+              v-for="app in appList"
+              :key="app.app_cd"
+              class="q-ma-xs"
+              @click="changMenu(app.app_cd)"
+            >
+              {{ app.app_nm }}</q-btn
+            >
+          </div>
+        </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
-        <q-btn flat round dense icon="sim_card" class="q-mr-xs" to="/sub" />
+        <div class="q-ma-lg">Quasar v{{ $q.version }}</div>
         <q-btn
+          flat
+          round
+          dense
+          label="전환"
+          icon="code"
+          class="q-mr-xs"
+          to="/sub"
+        >
+          <template v-slot:loading> </template>
+        </q-btn>
+        <q-btn
+          color="yellow"
           flat
           round
           dense
@@ -23,7 +47,7 @@
           @click="toggleDarkMode"
         ></q-btn>
         <q-btn round class="q-ml-sm" to="/main-content">
-          <q-avatar size="42px">
+          <q-avatar>
             <img src="/avatar.png" />
           </q-avatar>
         </q-btn>
@@ -74,17 +98,11 @@
       <q-list>
         <q-item-label header>
           <q-avatar class="q-mr-sm" size="sm">
-            <img src="/avatar.png" alt="" />
+            <img src="/avatar.png" alt="abcd" />
           </q-avatar>
-          Essential Links
+          <q-text label="Lubentise"></q-text>
         </q-item-label>
-
-        <EssentialLink
-          class=""
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <MenuMain :menu="m" v-for="(m, i) in menuList" :key="i" />
       </q-list>
     </q-drawer>
 
@@ -94,111 +112,35 @@
   </q-layout>
 </template>
 
-<script>
-const linksList = [
-  {
-    title: 'Typography',
-    caption: 'Typography Sample',
-    icon: 'school',
-    //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/typography',
-  },
-  {
-    title: 'Color',
-    caption: 'Color Sample',
-    icon: 'circle',
-    //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/color',
-  },
-  {
-    title: 'BreakPoint',
-    caption: 'Breakpoint Sample',
-    icon: 'settings',
-    //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/breakpoint',
-  },
-  {
-    title: 'Grid One',
-    caption: 'Grid Sample First',
-    icon: 'settings',
-    //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/flex-grid-one',
-  },
-  {
-    title: 'Instagram',
-    caption: 'Sample Create',
-    icon: 'settings',
-    //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/main-content',
-  },
-  {
-    title: 'Form Handling',
-    caption: 'quasar.dev',
-    icon: 'school',
-    //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/form-handling',
-  },
-  {
-    title: 'Quasar Utils',
-    caption: 'quasar.dev',
-    icon: 'school',
-    //현재화면에서 router로 랜더링할때 to Propertie 사용
-    to: '/quasar-utils',
-  },
-  // {
-  //   title: 'Docs',
-  //   caption: 'quasar.dev',
-  //   icon: 'school',
-  //   link: 'https://quasar.dev',
-  // },
-  // {
-  //   title: 'Github',
-  //   caption: 'github.com/quasarframework',
-  //   icon: 'code',
-  //   link: 'https://github.com/quasarframework',
-  // },
-  // {
-  //   title: 'Discord Chat Channel',
-  //   caption: 'chat.quasar.dev',
-  //   icon: 'chat',
-  //   link: 'https://chat.quasar.dev',
-  // },
-  // {
-  //   title: 'Forum',
-  //   caption: 'forum.quasar.dev',
-  //   icon: 'record_voice_over',
-  //   link: 'https://forum.quasar.dev',
-  // },
-  // {
-  //   title: 'Twitter',
-  //   caption: '@quasarframework',
-  //   icon: 'rss_feed',
-  //   link: 'https://twitter.quasar.dev',
-  // },
-  // {
-  //   title: 'Facebook',
-  //   caption: '@QuasarFramework',
-  //   icon: 'public',
-  //   link: 'https://facebook.quasar.dev',
-  // },
-  // {
-  //   title: 'Quasar Awesome',
-  //   caption: 'Community Quasar projects',
-  //   icon: 'favorite',
-  //   link: 'https://awesome.quasar.dev',
-  // },
-];
-</script>
+<script></script>
 <script setup>
-import { ref, computed, watchEffect } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
+import { ref, computed, watchEffect, reactive } from 'vue';
+import MenuMain from 'src/components/MenuMain.vue';
 import { useQuasar } from 'quasar';
+import { getApps } from 'src/api/application';
+import { getLinks } from 'src/api/initLinked';
+import { getUpperMenu } from 'src/api/menu';
 
-const $q = useQuasar();
+/* 상단 메뉴 Start */
+const appList = reactive(getApps());
+const changMenu = appCd => {
+  leftDrawerOpen.value = true;
+  if (appCd === 'HOME') {
+    menuList.value = getLinks();
+  } else {
+    menuList.value = getUpperMenu(appCd);
+  }
+};
+
+//메뉴 토글
 const leftDrawerOpen = ref(false);
+const toggleLeftDrawer = toggle => {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
+/* 상단 메뉴 End*/
 
-const essentialLinks = linksList;
-const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
+/* 우상단 버튼 Start */
+const $q = useQuasar();
 
 const darkModeIcon = computed(() =>
   $q.dark.isActive ? 'dark_mode' : 'light_mode',
@@ -206,18 +148,13 @@ const darkModeIcon = computed(() =>
 const toggleDarkMode = () => {
   $q.dark.toggle();
   /*
-  보통 localStorage에 set할경우 String으로 저장되서 get할때 타입에러가 나는경우가발생한다.
+  보통 localStorage에 set할경우 String으로 저장되서 get할때 타입에러가 나는 경우가 발생한다.
   하지만 quasar에서는 타입체크하는 구분자로 저장되서 타입걱정을 안해도 된다.
   */
   $q.localStorage.set('darkMode', $q.dark.isActive);
 };
-// const transformLayout = () => {
-//   let value = $q.localStorage.getItem('layout') || '';
-//   console.log('1', value);
-//   value = value == 'sub' ? '' : 'sub';
-//   console.log('2', value);
-//   $q.localStorage.set('layout', value);
-
-//   return value;
-// };
+/* 우상단 버튼 End */
+/* 좌측 메뉴 Strat */
+const menuList = ref([]); //;
+/* 좌측 메뉴 End */
 </script>

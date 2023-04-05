@@ -30,7 +30,7 @@ const $q = useQuasar();
 const loading = $q.loading.show();
 setTimeout(() => {
   $q.loading.hide();
-}, 3000);
+}, 500);
 const FORMAT = 'YYYY-MM-DD  HH:mm:ss';
 const { formatDate, addToDate } = date;
 

@@ -57,7 +57,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'prefer-promise-reject-errors': 'off',
-    // 'vue/multi-word-component-names': 'off', // 컴포넌트 두단어이상이름 합성 끄기 옵션
+    'vue/multi-word-component-names': 'off', // 컴포넌트 두단어이상이름 합성 끄기 옵션
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
