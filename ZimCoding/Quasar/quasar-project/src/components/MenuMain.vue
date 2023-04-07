@@ -14,12 +14,14 @@
         </q-item-section>
 
         <q-item-section>
-          {{ getMessages(menu.title ? menu.title : menu.menu_nm_cd) }}
+          {{ menu.title ? menu.title : menu.menu_nm }}
+          <!-- {{ getMessages(menu.title ? menu.title : menu.menu_nm_cd) }} -->
         </q-item-section>
       </template>
       <component
         :is="MenuItem"
         :menuList="menu.children"
+        :clickMenu="clickMenu"
         @movePage="movePage"
       ></component>
     </q-expansion-item>
@@ -31,14 +33,15 @@
       </q-item-section>
 
       <q-item-section>
-        {{ getMessages(menu.title ? menu.title : menu.menu_nm_cd) }}
+        {{ menu.title ? menu.title : menu.menu_nm }}
+        <!-- {{ getMessages(menu.title ? menu.title : menu.menu_nm_cd) }} -->
       </q-item-section>
     </q-item>
   </q-list>
 </template>
 <script setup>
 import MenuItem from 'components/MenuItem.vue';
-import { getMessages } from '/src/api/message';
+import { getMessages } from 'api/message';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -54,13 +57,15 @@ const fnIconClick = () => {
 };
 
 const router = useRouter();
+
+const clickMenu = ref('');
 const movePage = menu => {
   let setObj = {};
   if (menu.to) {
     setObj.path = menu.to;
   }
   if (menu.menu_cd) {
-    setObj.name = menu.menu_cd;
+    setObj.path = menu.devsc_path;
   }
   router.push(setObj);
 };

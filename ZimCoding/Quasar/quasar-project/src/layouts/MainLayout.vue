@@ -115,11 +115,11 @@
 <script></script>
 <script setup>
 import { ref, computed, watchEffect, reactive } from 'vue';
-import MenuMain from 'src/components/MenuMain.vue';
+import MenuMain from '@/components/MenuMain.vue';
 import { useQuasar } from 'quasar';
-import { getApps } from 'src/api/application';
-import { getLinks } from 'src/api/initLinked';
-import { getUpperMenu } from 'src/api/menu';
+import { getApps } from '@/api/application';
+import { getLinks } from '@/api/initLinked';
+import { getUpperMenu } from '@/api/menu';
 
 /* 상단 메뉴 Start */
 const appList = reactive(getApps());

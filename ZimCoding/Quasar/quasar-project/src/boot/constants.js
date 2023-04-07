@@ -11,7 +11,6 @@ urlPath	    URL의 경로 이름(경로 + 검색) 부분입니다. 또한 클라
 publicPath	구성된 공용 경로입니다.
 redirect	  다른 URL로 리디렉션하기 위해 호출하는 함수입니다. 문자열(전체 URL) 또는 Vue 라우터 위치 문자열 또는 개체를 허용합니다.
 */
-
 export default boot(({ app }) => {
   /* vue3 앱 내부의 모든 컴포넌트 인스턴스에서 접근할 수 있는 전역 속성을 등록하는 데 사용되는 객체. */
   app.config.globalProperties.greeting = 'initial greeting';

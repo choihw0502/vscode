@@ -76,3 +76,7 @@ const routes = [
 ];
 
 export default routes;
+
+export function getRoutes() {
+  return routes;
+}

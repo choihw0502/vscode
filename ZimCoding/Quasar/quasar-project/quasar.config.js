@@ -9,7 +9,8 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 const { configure } = require('quasar/wrappers');
-
+const path = require('path');
+console.log(path);
 module.exports = configure(function (/* ctx */) {
   return {
     eslint: {
@@ -70,11 +71,17 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf(viteConf, { isServer, isClient }) {
+        Object.assign(viteConf.resolve.alias, {
+          '@': path.join(__dirname, './src'),
+          api: path.join(__dirname, './src/api'),
+          views: path.join(__dirname, './src/views'),
+        });
+      },
       // viteVuePluginOptions: {},
 
       // vitePlugins: [
-      //   [ 'package-name', { ..options.. } ]
+      //   [ 'vite-plugin-alias', { ..options.. } ]
       // ]
     },
 

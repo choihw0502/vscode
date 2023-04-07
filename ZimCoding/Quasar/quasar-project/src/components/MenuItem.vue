@@ -14,24 +14,26 @@
       />
     </q-item-section>
     <q-item-section v-if="!menu.children">
-      {{ getMessages(menu.menu_nm_cd) }}
+      {{ menu.menu_nm }}
+      <!-- {{ getMessages(menu.menu_nm_cd) }} -->
     </q-item-section>
     <q-item-section v-else>
-      <component :is="EssentialLink" :menu="menu"></component>
+      <component :is="MenuMain" :menu="menu"></component>
     </q-item-section>
   </q-item>
 </template>
 <script setup>
-import EssentialLink from 'src/components/MenuMain.vue';
-import { getMessages } from '/src/api/message';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import MenuMain from 'components/MenuMain.vue';
 
 /* 부모에게 전달받은 데이터 */
 const props = defineProps({
   menuList: {
     type: Array,
     default: () => [],
+  },
+  clickMenu: {
+    type: String,
+    default: '',
   },
 });
 
