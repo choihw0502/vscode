@@ -67,6 +67,38 @@ const movePage = menu => {
   if (menu.menu_cd) {
     setObj.path = menu.devsc_path;
   }
+  console.log(router.getRoutes());
   router.push(setObj);
+};
+
+/* sample source */
+// Vue Router에 routes 추가 (routes.js)
+// MainLayout 하위의 children[] 에 추가함
+// menu.component 는 컴포넌트의 절대경로로 입력해야 함.
+// 재귀함수
+const makeRoute = menus => {
+  const modules = import.meta.glob('/src/pages/**/*.vue');
+
+  menus.forEach(menu => {
+    if (menu.link) {
+      // _link : /formtest => formtest
+      //let _link = menu.link.substring(1, menu.link.length);
+      let _link = menu.link;
+
+      router.addRoute('MainLayout', {
+        path: _link,
+        name: _link,
+        meta: {
+          breadcrumbs: menu.breadcrumbs,
+        },
+        //component: () => import(menu.component),
+        component: modules[menu.component],
+      });
+    }
+    // 하위 메뉴가 존재할 경우 라우터 추가 함수 실행
+    if (menu.children) {
+      makeRoute(menu.children);
+    }
+  });
 };
 </script>

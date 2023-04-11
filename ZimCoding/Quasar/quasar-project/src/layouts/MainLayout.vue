@@ -114,12 +114,30 @@
 
 <script></script>
 <script setup>
-import { ref, computed, watchEffect, reactive } from 'vue';
+import { ref, computed, getCurrentInstance, reactive, inject } from 'vue';
+import { useRouter } from 'vue-router';
 import MenuMain from '@/components/MenuMain.vue';
 import { useQuasar } from 'quasar';
 import { getApps } from '@/api/application';
 import { getLinks } from '@/api/initLinked';
 import { getUpperMenu } from '@/api/menu';
+// import { api } from '@/boot/axios';
+
+/* Provide 로 설정한 경우 */
+const axios = inject('axios');
+// console.log(axios);
+
+/* app.config.globalProperties 설정한 경우 */
+const { proxy } = getCurrentInstance();
+// console.log(proxy.$api);
+const router = useRouter();
+
+const appTestList = proxy
+  .$api({ method: 'get', url: '/auth/mobileAppList', data: {} })
+  .then(data => {
+    console.log(data);
+    return data;
+  });
 
 /* 상단 메뉴 Start */
 const appList = reactive(getApps());
@@ -128,7 +146,7 @@ const changMenu = appCd => {
   if (appCd === 'HOME') {
     menuList.value = getLinks();
   } else {
-    menuList.value = getUpperMenu(appCd);
+    menuList.value = getUpperMenu(appCd, router);
   }
 };
 

@@ -1936,21 +1936,21 @@ const menuList = [
     btn_group: null,
   },
 ];
-
-export function getUpperMenu(appCd) {
+const router = null;
+export function getUpperMenu(appCd, router) {
   let resultList = [];
 
   menuList
     .filter(menu => menu.upper_menu_cd == null && menu.app_cd === appCd)
     .forEach(m => {
-      recursiveMenuList(m, resultList);
+      recursiveMenuList(m, resultList, router);
       //treeMenuList(m, resultList);
     });
 
   return resultList;
 }
 /* 메뉴 트리구조화 */
-function recursiveMenuList(parent, seed) {
+function recursiveMenuList(parent, seed, router) {
   /* 상위 메뉴 코드로 자식메뉴 filter */
   let children = menuList.filter(mm => mm.upper_menu_cd == parent.menu_cd);
 
@@ -1963,12 +1963,15 @@ function recursiveMenuList(parent, seed) {
     children = btnMenuList(children);
 
     /* devsc_path로 route.js에 추가 */
-    createRoute(children.flatMap(m => m.devsc_path || []));
+    createRoute(
+      children.flatMap(m => m.devsc_path || []),
+      router,
+    );
 
     /* 자식메뉴 하위에 메뉴가 존재하는지 재귀   */
     let results = [];
     children.forEach(m => {
-      recursiveMenuList(m, results);
+      recursiveMenuList(m, results, router);
     });
     parent.children = results;
   }
@@ -1985,26 +1988,23 @@ function btnMenuList(childBtnList) {
 }
 
 import routes from '@/router/routes';
-// import route from '@/router/index';
-import { useRoute } from 'vue-router';
-import * as vue from 'vue';
-import * as router from 'vue-router';
-import * as quasar from 'quasar';
 
-console.dir(vue);
-console.info('router', router);
-console.info('quasar', quasar);
+const modules = import.meta.glob('/src/views/**/*.vue');
 
-const route = useRoute();
-
-export function createRoute(path) {
+export function createRoute(path, router) {
   if (typeof path === 'string') {
-    if (!routes.find(route => route.path == path))
-      routes.push({
+    if (!routes.find(route => route.path == path)) {
+      let moduleKey = Object.keys(modules).find(
+        module => module.indexOf(path) > 0,
+      );
+      router.addRoute('MainLayout', {
         path: path,
-        component: () => import('views/cms/Message.vue'),
+        name: path,
+        component: moduleKey
+          ? modules[moduleKey]
+          : () => import('pages/IndexPage.vue'),
       });
-    console.log(routes);
+    }
   }
 
   if (typeof path === 'object') {
@@ -2013,7 +2013,7 @@ export function createRoute(path) {
   if (Array.isArray(path)) {
     path.forEach(p => {
       if (p.path || typeof p === 'string') {
-        createRoute(p.path || p);
+        createRoute(p.path || p, router);
       }
     });
   }

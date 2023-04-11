@@ -3,8 +3,23 @@
 import { boot } from 'quasar/wrappers';
 import { Dark, LocalStorage } from 'quasar';
 
-export default boot(async () => {
+export default boot(async ({ app, router, urlPath }) => {
   console.log('### Initialization ### ');
+
+  const checkRoute = (routes, url) => {
+    for (let route of routes) {
+      if (route.children.length === 0) {
+        return routes.find(route => route.path == url);
+      } else {
+        checkRoute(route.children, url);
+      }
+    }
+  };
+  const route = checkRoute(router.getRoutes(), urlPath);
+  //router.push({ path: '/' });
+  console.log(route || '/');
+  router.push({ path: '/', name: 'MainLayout' });
+  // router.get
   /* Dark Mode 설정 */
   const darkMode = LocalStorage.getItem('darkMode');
   Dark.set(darkMode);

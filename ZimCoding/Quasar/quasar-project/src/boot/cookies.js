@@ -13,7 +13,8 @@ redirect	  다른 URL로 리디렉션하기 위해 호출하는 함수입니다.
 */
 const cookies = useCookies();
 export default boot(({ app }) => {
-  console.log(cookies.cookies.set('test', 1234));
+  console.log('### Cookies Boot ### ');
+
   globalCookiesConfig({
     expireTimes: '30d',
     path: '/',
