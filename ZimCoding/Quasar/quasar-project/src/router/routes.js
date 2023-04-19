@@ -42,6 +42,7 @@ const routes = [
   },
   {
     path: '/sub',
+    name: 'SubLayout',
     component: () => import('layouts/SubLayout.vue'),
     children: [
       {
@@ -56,10 +57,11 @@ const routes = [
   },
   {
     path: '/login',
+    name: 'LoginLayout',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
       {
-        path: 'in',
+        path: '',
         component: () => import('pages/login/Signin.vue'),
       },
       {

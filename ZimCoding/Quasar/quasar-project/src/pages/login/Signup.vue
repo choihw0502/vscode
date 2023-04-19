@@ -47,7 +47,7 @@
               <q-btn
                 class="full-width q-mt-x5"
                 label="로그인"
-                to="/login/in"
+                to="/login"
               ></q-btn>
             </div>
           </q-form>

@@ -67,7 +67,7 @@ const movePage = menu => {
   if (menu.menu_cd) {
     setObj.path = menu.devsc_path;
   }
-  console.log(router.getRoutes());
+  //console.log(router.getRoutes());
   router.push(setObj);
 };
 

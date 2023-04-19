@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers';
 import axios from 'axios';
 
 // const targetUrl = import.meta.env.VITE_APP_AXIOS_BASE_URL; //axios 호출 url
-const targetUrl = 'http://localhost:8080';
+const targetUrl = 'http://localhost:8085';
 
 var LOADING_STATE = true; //로딩제어 초기값
 // var LOADING_SPINNER = QSpinnerCube; //스피너모양
@@ -74,12 +74,30 @@ const useAxios = (
   return api({ method: method, url: url, data: param });
 };
 
+// const languageList = api({
+//   url: '/auth/languageList',
+// }).then(data => {
+//   console.log(data);
+//   return data;
+// });
+
 export default boot(async ({ app }) => {
   console.log('### Axios Boot ### ');
-  // app.config.globalProperties.$axios = axios;
+
+  app.config.globalProperties.$axios = axios;
   app.config.globalProperties.$api = api;
 
-  app.provide('axios', axios);
+  app.config.globalProperties.languageList = api({
+    url: '/auth/languageList',
+  });
+  // app.provide('axios', axios);
+  // api({
+  //   method: 'post',
+  //   url: '/auth/login',
+  //   params: { id: 'j2admin', pw: '1234' },
+  // }).then(data => {
+  //   console.log(data);
+  // });
 });
 
-//export { axios, api, useAxios };
+export { axios, api, useAxios };

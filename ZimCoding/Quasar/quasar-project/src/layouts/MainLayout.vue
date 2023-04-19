@@ -29,8 +29,8 @@
         <div class="q-ma-lg">Quasar v{{ $q.version }}</div>
         <q-btn
           flat
+          outline
           round
-          dense
           label="전환"
           icon="code"
           class="q-mr-xs"
@@ -40,20 +40,19 @@
         </q-btn>
         <q-btn
           color="yellow"
-          flat
           round
-          dense
+          outline
           :icon="darkModeIcon"
           @click="toggleDarkMode"
         ></q-btn>
-        <q-btn round class="q-ml-sm" to="/main-content">
+        <q-btn outline round class="q-ml-sm" to="/main/main-content">
           <q-avatar>
             <img src="/avatar.png" />
           </q-avatar>
         </q-btn>
 
         <div class="q-pa-md">
-          <q-btn label="Account Settings">
+          <q-btn outline label="Account Settings">
             <q-menu>
               <div class="row no-wrap q-pa-md">
                 <!-- <q-separator vertical inset class="q-mx-lg" /> -->
@@ -72,7 +71,7 @@
                       push
                       size="sm"
                       v-close-popup
-                      to="/login/in"
+                      to="/login"
                     />
 
                     <q-btn
@@ -90,6 +89,9 @@
               </div>
             </q-menu>
           </q-btn>
+        </div>
+        <div class="q-gutter-none">
+          <q-btn outline class="q-ma-xs" @click="logout"> 로그아웃 </q-btn>
         </div>
       </q-toolbar>
     </q-header>
@@ -121,32 +123,48 @@ import { useQuasar } from 'quasar';
 import { getApps } from '@/api/application';
 import { getLinks } from '@/api/initLinked';
 import { getUpperMenu } from '@/api/menu';
-// import { api } from '@/boot/axios';
+
+// import * as axioss from '@/boot/axios';
+/* 파일에서 import */
+// axioss
+//   .useAxios('post', '/auth/login', { p: 'j2admin', c: '1234' })
+//   .then(data => {
+//     //로그인이 성공하면 메인페이지로 이동
+//     mainPage();
+//   })
+//   .catch(error => {
+//     ERROR_NOTIFY.message = error.message;
+//     //$q.notify(ERROR_NOTIFY);
+//     $q.dialog({ title: '알림', message: error.message });
+//   });
 
 /* Provide 로 설정한 경우 */
-const axios = inject('axios');
-// console.log(axios);
+// const axios = inject('axios');
 
 /* app.config.globalProperties 설정한 경우 */
 const { proxy } = getCurrentInstance();
-// console.log(proxy.$api);
+const api = proxy.$api;
+
 const router = useRouter();
 
-const appTestList = proxy
-  .$api({ method: 'get', url: '/auth/mobileAppList', data: {} })
-  .then(data => {
-    console.log(data);
-    return data;
-  });
-
 /* 상단 메뉴 Start */
-const appList = reactive(getApps());
+const appList = ref(getApps());
 const changMenu = appCd => {
   leftDrawerOpen.value = true;
   if (appCd === 'HOME') {
     menuList.value = getLinks();
   } else {
-    menuList.value = getUpperMenu(appCd, router);
+    //menuList.value = getUpperMenu(appCd, router);
+    api({
+      method: 'post',
+      url: '/auth/menuList',
+      data: { appCd },
+      params: { appCd },
+    }).then(data => {
+      // console.log(menuList.value);
+      console.log(data);
+      menuList.value = data;
+    });
   }
 };
 
@@ -170,6 +188,15 @@ const toggleDarkMode = () => {
   하지만 quasar에서는 타입체크하는 구분자로 저장되서 타입걱정을 안해도 된다.
   */
   $q.localStorage.set('darkMode', $q.dark.isActive);
+};
+
+const logout = () => {
+  console.log($q.sessionStorage.getAllKeys());
+  $q.sessionStorage.getAllKeys().forEach(key => {
+    sessionStorage.removeItem(key);
+  });
+
+  window.location.href = '/login';
 };
 /* 우상단 버튼 End */
 /* 좌측 메뉴 Strat */
